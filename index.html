@@ -190,7 +190,7 @@ body{font-family:Inter,-apple-system,sans-serif;background:#0a0a0f;color:#e0e0ec
 <script>
 // Client-side password auth using SHA-256 hash
 // Password hash is checked client-side (good enough for a personal dashboard)
-const HASH = "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"; // sha256("password")
+const HASH = "3b073739bc49548463468f69dda9ef6fb6aba4bf2067c5753fde1fa00b8d6eec";
 
 async function sha256(str) {
   const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
