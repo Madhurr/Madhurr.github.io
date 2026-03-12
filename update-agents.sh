@@ -77,6 +77,6 @@ sed -i "s/TIMESTAMP/$(date -u +%Y-%m-%dT%H:%M:%SZ)/" "$DASH/agents.json"
 cd "$DASH"
 git add -A
 git diff --cached --quiet && { echo "[agents] No changes"; exit 0; }
-git commit -q -m "agents $(TZ=Asia/Calcutta date '+%H:%M')"
+git commit -q -m "agents $(TZ=Asia/Kolkata date '+%H:%M')"
 git push -q 2>/dev/null
 echo "[agents] Updated"

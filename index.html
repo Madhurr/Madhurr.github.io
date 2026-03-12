@@ -166,25 +166,37 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 
 <div class="g">
 
-  <!-- Row 1: Hardware Gauges -->
+  <!-- Row 1: Hardware Gauges + Graph -->
   <div class="c c4">
     <h2>⚡ System Health — BeastClaw (i7-14700F / RX 7900 XT / 128GB)</h2>
-    <div class="hw">
-      <div>
-        <div class="gauge"><svg viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="42"/><circle class="fg" cx="50" cy="50" r="42" stroke="var(--blu)" stroke-dasharray="264" id="cpu-ring"/></svg><div class="gauge-label"><div class="gauge-val" id="cpu-pct">—</div><div class="gauge-sub">CPU</div></div></div>
-        <div style="text-align:center;margin-top:6px;font-size:10px;color:var(--t3)" id="cpu-temp"></div>
+    <div style="display:flex;gap:16px;align-items:flex-start">
+      <div class="hw" style="flex-shrink:0">
+        <div>
+          <div class="gauge"><svg viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="42"/><circle class="fg" cx="50" cy="50" r="42" stroke="var(--blu)" stroke-dasharray="264" id="cpu-ring"/></svg><div class="gauge-label"><div class="gauge-val" id="cpu-pct">—</div><div class="gauge-sub">CPU</div></div></div>
+          <div style="text-align:center;margin-top:6px;font-size:10px;color:var(--t3)" id="cpu-temp"></div>
+        </div>
+        <div>
+          <div class="gauge"><svg viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="42"/><circle class="fg" cx="50" cy="50" r="42" stroke="var(--pur)" stroke-dasharray="264" id="ram-ring"/></svg><div class="gauge-label"><div class="gauge-val" id="ram-pct">—</div><div class="gauge-sub">RAM</div></div></div>
+          <div style="text-align:center;margin-top:6px;font-size:10px;color:var(--t3)" id="ram-detail"></div>
+        </div>
+        <div>
+          <div class="gauge"><svg viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="42"/><circle class="fg" cx="50" cy="50" r="42" stroke="var(--grn)" stroke-dasharray="264" id="gpu-ring"/></svg><div class="gauge-label"><div class="gauge-val" id="gpu-pct">—</div><div class="gauge-sub">GPU</div></div></div>
+          <div style="text-align:center;margin-top:6px;font-size:10px;color:var(--t3)" id="gpu-temp"></div>
+        </div>
+        <div>
+          <div class="gauge"><svg viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="42"/><circle class="fg" cx="50" cy="50" r="42" stroke="var(--org)" stroke-dasharray="264" id="disk-ring"/></svg><div class="gauge-label"><div class="gauge-val" id="disk-pct">—</div><div class="gauge-sub">Disk</div></div></div>
+          <div style="text-align:center;margin-top:6px;font-size:10px;color:var(--t3)" id="disk-detail"></div>
+        </div>
       </div>
-      <div>
-        <div class="gauge"><svg viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="42"/><circle class="fg" cx="50" cy="50" r="42" stroke="var(--pur)" stroke-dasharray="264" id="ram-ring"/></svg><div class="gauge-label"><div class="gauge-val" id="ram-pct">—</div><div class="gauge-sub">RAM</div></div></div>
-        <div style="text-align:center;margin-top:6px;font-size:10px;color:var(--t3)" id="ram-detail"></div>
-      </div>
-      <div>
-        <div class="gauge"><svg viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="42"/><circle class="fg" cx="50" cy="50" r="42" stroke="var(--grn)" stroke-dasharray="264" id="gpu-ring"/></svg><div class="gauge-label"><div class="gauge-val" id="gpu-pct">—</div><div class="gauge-sub">GPU</div></div></div>
-        <div style="text-align:center;margin-top:6px;font-size:10px;color:var(--t3)" id="gpu-temp"></div>
-      </div>
-      <div>
-        <div class="gauge"><svg viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="42"/><circle class="fg" cx="50" cy="50" r="42" stroke="var(--org)" stroke-dasharray="264" id="disk-ring"/></svg><div class="gauge-label"><div class="gauge-val" id="disk-pct">—</div><div class="gauge-sub">Disk</div></div></div>
-        <div style="text-align:center;margin-top:6px;font-size:10px;color:var(--t3)" id="disk-detail"></div>
+      <div style="flex:1;min-width:0">
+        <canvas id="hw-chart" height="130" style="width:100%;border-radius:6px;background:var(--bg3)"></canvas>
+        <div style="display:flex;gap:12px;justify-content:center;margin-top:6px;font-size:9px">
+          <span style="color:var(--blu)">● CPU</span>
+          <span style="color:var(--pur)">● RAM</span>
+          <span style="color:var(--grn)">● GPU</span>
+          <span style="color:var(--org)">● VRAM</span>
+          <span style="color:var(--red)">● CPU Temp</span>
+        </div>
       </div>
     </div>
   </div>
@@ -304,7 +316,7 @@ async function sha256(s){const b=await crypto.subtle.digest("SHA-256",new TextEn
 const pw=document.getElementById("pw"),err=document.getElementById("err");
 if(sessionStorage.getItem("nxa")==="1")show();
 pw.addEventListener("keydown",async e=>{if(e.key!=="Enter")return;if(await sha256(pw.value)===HASH){sessionStorage.setItem("nxa","1");show()}else{err.textContent="Access denied";pw.value=""}});
-function show(){document.getElementById("lock").style.display="none";document.getElementById("dash").style.display="block";fetchData();fetchAgents();setInterval(fetchData,120000);setInterval(fetchAgents,120000)}
+function show(){document.getElementById("lock").style.display="none";document.getElementById("dash").style.display="block";fetchData();fetchAgents();fetchHwHistory();setInterval(fetchData,120000);setInterval(fetchAgents,120000);setInterval(fetchHwHistory,120000)}
 function logout(){sessionStorage.removeItem("nxa");document.getElementById("dash").style.display="none";document.getElementById("lock").style.display="block";pw.value="";err.textContent=""}
 
 function setGauge(id,pct,col){
@@ -419,9 +431,82 @@ async function fetchData(){
 
 function tick(){
   const el=document.getElementById("clock");
-  if(el)el.textContent=new Date().toLocaleString("en-IN",{timeZone:"Asia/Calcutta",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false,day:"2-digit",month:"short"});
+  if(el)el.textContent=new Date().toLocaleString("en-IN",{timeZone:"Asia/Kolkata",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false,day:"2-digit",month:"short"});
 }
 tick();setInterval(tick,1000);
+
+// ── Hardware History Graph ──
+async function fetchHwHistory(){
+  try{
+    const r=await fetch("hw-history.json?t="+Date.now());
+    if(!r.ok)return;
+    const data=await r.json();
+    if(!data.length)return;
+    drawHwChart(data);
+  }catch(e){}
+}
+
+function drawHwChart(data){
+  const canvas=document.getElementById("hw-chart");
+  if(!canvas)return;
+  const ctx=canvas.getContext("2d");
+  const dpr=window.devicePixelRatio||1;
+  const rect=canvas.getBoundingClientRect();
+  canvas.width=rect.width*dpr;
+  canvas.height=rect.height*dpr;
+  ctx.scale(dpr,dpr);
+  const W=rect.width,H=rect.height;
+  const pad={t:8,r:8,b:20,l:30};
+  const gW=W-pad.l-pad.r,gH=H-pad.t-pad.b;
+
+  ctx.clearRect(0,0,W,H);
+
+  // Grid
+  ctx.strokeStyle="rgba(42,42,58,0.5)";ctx.lineWidth=0.5;
+  for(let i=0;i<=4;i++){
+    const y=pad.t+gH*(i/4);
+    ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(W-pad.r,y);ctx.stroke();
+    ctx.fillStyle="#5a5a7a";ctx.font="8px Inter,sans-serif";ctx.textAlign="right";
+    ctx.fillText((100-i*25)+"%",pad.l-4,y+3);
+  }
+
+  // Time labels
+  const step=Math.max(1,Math.floor(data.length/6));
+  ctx.fillStyle="#5a5a7a";ctx.font="8px Inter,sans-serif";ctx.textAlign="center";
+  for(let i=0;i<data.length;i+=step){
+    const x=pad.l+(i/(data.length-1||1))*gW;
+    ctx.fillText(data[i].t,x,H-4);
+  }
+
+  // Draw lines
+  const series=[
+    {key:"cpu",color:"#60a5fa"},
+    {key:"ram",color:"#a78bfa"},
+    {key:"gpu",color:"#4ade80"},
+    {key:"vram",color:"#fb923c"},
+    {key:"cpuT",color:"#f87171",scale:true}
+  ];
+
+  for(const s of series){
+    ctx.beginPath();ctx.strokeStyle=s.color;ctx.lineWidth=1.5;ctx.lineJoin="round";
+    for(let i=0;i<data.length;i++){
+      let val=data[i][s.key]||0;
+      if(s.scale)val=Math.min(val,100); // temp already 0-100 range for chart
+      const x=pad.l+(i/(data.length-1||1))*gW;
+      const y=pad.t+gH*(1-val/100);
+      if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+
+    // Fill under
+    const lastI=data.length-1;
+    const lastX=pad.l+(lastI/(data.length-1||1))*gW;
+    ctx.lineTo(lastX,pad.t+gH);ctx.lineTo(pad.l,pad.t+gH);ctx.closePath();
+    ctx.fillStyle=s.color.replace(")",",0.05)").replace("rgb","rgba").replace("#","");
+    // Use hex alpha
+    ctx.globalAlpha=0.06;ctx.fill();ctx.globalAlpha=1;
+  }
+}
 
 async function fetchAgents(){
   try{

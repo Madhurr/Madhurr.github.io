@@ -96,7 +96,7 @@ FEEDBACK='[
 cat > "$DASH/data.json" << JSONEOF
 {
   "updated": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
-  "updatedIST": "$(TZ=Asia/Calcutta date '+%H:%M:%S %d %b')",
+  "updatedIST": "$(TZ=Asia/Kolkata date '+%H:%M:%S %d %b')",
   "hw": {
     "cpuPct": $CPU_PCT, "cpuTemp": $CPU_TEMP,
     "ramPct": $RAM_PCT, "ramUsedMB": $RAM_USED, "ramTotalMB": $RAM_TOTAL,
@@ -121,6 +121,6 @@ JSONEOF
 cd "$DASH"
 git add -A
 git diff --cached --quiet && { echo "[full] No changes"; exit 0; }
-git commit -q -m "sync $(TZ=Asia/Calcutta date '+%H:%M')"
+git commit -q -m "sync $(TZ=Asia/Kolkata date '+%H:%M')"
 git push -q 2>/dev/null
-echo "[full] Synced at $(TZ=Asia/Calcutta date '+%H:%M:%S')"
+echo "[full] Synced at $(TZ=Asia/Kolkata date '+%H:%M:%S')"
