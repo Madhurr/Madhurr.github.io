@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>🐺 Nexus Build</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,-apple-system,sans-serif;background:#0a0a0f;color:#e0e0ec;min-height:100vh;display:flex;align-items:center;justify-content:center}
+.lock{text-align:center;padding:40px}
+.lock h1{font-size:24px;margin-bottom:8px}
+.lock p{color:#8888aa;font-size:14px;margin-bottom:24px}
+.lock input{background:#12121a;border:1px solid #2a2a3a;color:#e0e0ec;padding:12px 20px;border-radius:8px;font-size:16px;width:260px;text-align:center;outline:none}
+.lock input:focus{border-color:#a78bfa}
+.lock .err{color:#f87171;font-size:13px;margin-top:8px;min-height:20px}
+.lock .wolf{font-size:64px;margin-bottom:16px}
+
+/* Dashboard */
+.dash{display:none;min-height:100vh;width:100%}
+.header{padding:20px 24px;border-bottom:1px solid #2a2a3a;display:flex;align-items:center;justify-content:space-between}
+.header h1{font-size:18px;font-weight:600}
+.header h1 span{color:#a78bfa}
+.header .r{display:flex;gap:16px;align-items:center}
+.header .clock{color:#8888aa;font-size:13px;font-variant-numeric:tabular-nums}
+.header .logout{background:none;border:1px solid #2a2a3a;color:#8888aa;padding:4px 12px;border-radius:6px;cursor:pointer;font-size:12px}
+.header .logout:hover{border-color:#f87171;color:#f87171}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:20px 24px;max-width:1100px;margin:0 auto}
+@media(max-width:768px){.grid{grid-template-columns:1fr;padding:12px}}
+
+.card{background:#12121a;border:1px solid #2a2a3a;border-radius:10px;padding:16px}
+.card h2{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#8888aa;margin-bottom:12px}
+.full{grid-column:1/-1}
+
+.phase{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #1a1a26}
+.phase:last-child{border:none}
+.pb{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.pb.d{background:rgba(74,222,128,.15);color:#4ade80}
+.pb.a{background:rgba(96,165,250,.15);color:#60a5fa;animation:p 2s infinite}
+.pb.q{background:rgba(136,136,170,.08);color:#555}
+.pn{flex:1;font-size:13px}
+.ps{font-size:11px;padding:3px 8px;border-radius:5px}
+.ps.d{background:rgba(74,222,128,.08);color:#4ade80}
+.ps.a{background:rgba(96,165,250,.08);color:#60a5fa}
+.ps.q{background:rgba(136,136,170,.05);color:#555}
+
+.ag{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #1a1a26}
+.ag:last-child{border:none}
+.dot{width:8px;height:8px;border-radius:50%;margin-top:5px;flex-shrink:0}
+.dot.d{background:#4ade80}
+.dot.r{background:#60a5fa;animation:p 1.5s infinite}
+.ai{flex:1}
+.ai .n{font-size:13px;font-weight:600}
+.ai .t{font-size:11px;color:#8888aa;margin-top:2px}
+.ai .m{font-size:10px;color:#8888aa;margin-top:4px;display:flex;gap:12px}
+
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.st{text-align:center;padding:10px;background:#1a1a26;border-radius:6px}
+.sv{font-size:22px;font-weight:700}
+.sl{font-size:10px;color:#8888aa;margin-top:3px;text-transform:uppercase;letter-spacing:.5px}
+
+.cm{display:flex;gap:10px;padding:6px 0;border-bottom:1px solid #1a1a26;font-size:12px}
+.cm:last-child{border:none}
+.ch{color:#22d3ee;font-family:'JetBrains Mono',monospace;font-size:11px;flex-shrink:0}
+.ct{color:#8888aa;font-size:10px;flex-shrink:0}
+
+.mr{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #1a1a26}
+.mr:last-child{border:none}
+.mi{font-size:16px}
+.mn{font-size:12px;flex:1}
+.ms{font-size:10px}
+.mz{font-size:11px;color:#8888aa}
+.ms.on{background:rgba(74,222,128,.08);color:#4ade80;padding:2px 6px;border-radius:3px}
+
+.ni{padding:6px 0;border-bottom:1px solid #1a1a26;font-size:12px;display:flex;gap:6px}
+.ni:last-child{border:none}
+.nn{color:#a78bfa;font-weight:600;width:16px}
+
+@keyframes p{0%,100%{opacity:1}50%{opacity:.4}}
+</style>
+</head>
+<body>
+
+<!-- Login Screen -->
+<div class="lock" id="lock">
+  <div class="wolf">🐺</div>
+  <h1>Nexus Build Dashboard</h1>
+  <p>Anton's orchestration console</p>
+  <input type="password" id="pw" placeholder="Password" autofocus autocomplete="off"/>
+  <div class="err" id="err"></div>
+</div>
+
+<!-- Dashboard (hidden until auth) -->
+<div class="dash" id="dash">
+<div class="header">
+  <h1>🐺 <span>Anton</span> — Nexus Build</h1>
+  <div class="r">
+    <div class="clock" id="clock"></div>
+    <button class="logout" onclick="logout()">Logout</button>
+  </div>
+</div>
+
+<div class="grid">
+
+  <div class="card full">
+    <h2>Overall Progress</h2>
+    <div style="display:flex;justify-content:space-between;align-items:baseline">
+      <span id="pct" style="font-size:28px;font-weight:700;color:#4ade80">58%</span>
+      <span style="font-size:12px;color:#8888aa">Phases 1-3 complete → Phase 4 building</span>
+    </div>
+    <div style="height:5px;background:#1a1a26;border-radius:3px;overflow:hidden;margin-top:10px">
+      <div id="bar" style="height:100%;border-radius:3px;background:linear-gradient(90deg,#4ade80,#22d3ee);width:58%;transition:width 1s"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:11px;color:#8888aa">
+      <span>6 sub-agents deployed</span>
+      <span>~230K tokens</span>
+    </div>
+  </div>
+
+  <div class="card full">
+    <h2>Phases</h2>
+    <div class="phase"><div class="pb d">1</div><div class="pn"><b>Foundation</b> — Gateway + 15 Tools Tested</div><div class="ps d">✓</div></div>
+    <div class="phase"><div class="pb d">2</div><div class="pn"><b>Smart Context</b> — Indexer + @ Mentions + /Commands</div><div class="ps d">✓</div></div>
+    <div class="phase"><div class="pb d">3</div><div class="pn"><b>Inline Editing</b> — Ctrl+K + Diff + Apply Buttons</div><div class="ps d">✓</div></div>
+    <div class="phase"><div class="pb a">4</div><div class="pn"><b>Ghost Text</b> — Copilot Completions via Ollama</div><div class="ps a">●</div></div>
+    <div class="phase"><div class="pb q">5</div><div class="pn"><b>Multi-Agent Pipelines</b> — Worktree Isolation</div><div class="ps q">—</div></div>
+    <div class="phase"><div class="pb q">6</div><div class="pn"><b>Polish</b> — MCP, Image, Voice, Plugins</div><div class="ps q">—</div></div>
+  </div>
+
+  <div class="card">
+    <h2>Sub-Agents</h2>
+    <div class="ag"><div class="dot d"></div><div class="ai"><div class="n">nexus-ollama</div><div class="t">Ollama as Rust AI provider</div><div class="m"><span>⏱ 1m43s</span><span>🔤 25K</span><span style="color:#4ade80">✓</span></div></div></div>
+    <div class="ag"><div class="dot d"></div><div class="ai"><div class="n">nexus-context-engine</div><div class="t">Project indexer + smart context</div><div class="m"><span>⏱ 1m28s</span><span>🔤 12K</span><span style="color:#4ade80">✓</span></div></div></div>
+    <div class="ag"><div class="dot d"></div><div class="ai"><div class="n">nexus-inline-edit</div><div class="t">Ctrl+K inline editing + diff</div><div class="m"><span>⏱ 2m58s</span><span>🔤 15K</span><span style="color:#4ade80">✓</span></div></div></div>
+    <div class="ag"><div class="dot d"></div><div class="ai"><div class="n">nexus-chat-ux</div><div class="t">@ mentions, /commands, pills</div><div class="m"><span>⏱ 2m52s</span><span>🔤 18K</span><span style="color:#4ade80">✓</span></div></div></div>
+    <div class="ag"><div class="dot d"></div><div class="ai"><div class="n">nexus-apply-button</div><div class="t">Apply/Copy/Insert on code blocks</div><div class="m"><span>⏱ 3m12s</span><span>🔤 18K</span><span style="color:#4ade80">✓</span></div></div></div>
+    <div class="ag"><div class="dot r"></div><div class="ai"><div class="n">nexus-ghost-text</div><div class="t">Copilot completions via Ollama</div><div class="m"><span>⏱ running</span><span>🔤 —</span><span style="color:#60a5fa">●</span></div></div></div>
+  </div>
+
+  <div class="card">
+    <h2>Stats</h2>
+    <div class="sg">
+      <div class="st"><div class="sv" style="color:#4ade80">48</div><div class="sl">Tests</div></div>
+      <div class="st"><div class="sv" style="color:#22d3ee">15</div><div class="sl">AI Tools</div></div>
+      <div class="st"><div class="sv" style="color:#a78bfa">6</div><div class="sl">Agents</div></div>
+      <div class="st"><div class="sv" style="color:#fb923c">2.9K</div><div class="sl">Lines Added</div></div>
+      <div class="st"><div class="sv" style="color:#60a5fa">571</div><div class="sl">Bundle KB</div></div>
+      <div class="st"><div class="sv" style="color:#f472b6">0</div><div class="sl">Errors</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>AI Providers</h2>
+    <div class="mr"><div class="mi">☁️</div><div class="mn">CLIProxy (Claude)</div><div class="mz">:8317</div><div class="ms on">online</div></div>
+    <div class="mr"><div class="mi">🧠</div><div class="mn">GLM-4.5 Air</div><div class="mz">72GB</div><div class="ms on">online</div></div>
+    <div class="mr"><div class="mi">🔮</div><div class="mn">DeepSeek R1</div><div class="mz">42GB</div><div class="ms on">online</div></div>
+    <div class="mr"><div class="mi">⚡</div><div class="mn">Qwen3 Coder</div><div class="mz">18GB</div><div class="ms on">online</div></div>
+  </div>
+
+  <div class="card">
+    <h2>Commits (Tonight)</h2>
+    <div class="cm"><div class="ch">8fab31d</div><div style="flex:1">Context engine tests (48 total)</div><div class="ct">01:57</div></div>
+    <div class="cm"><div class="ch">34cb589</div><div style="flex:1">Ollama auto-detect + indexing</div><div class="ct">01:53</div></div>
+    <div class="cm"><div class="ch">39646e7</div><div style="flex:1">@ mentions, slash commands</div><div class="ct">01:50</div></div>
+    <div class="cm"><div class="ch">0995a3b</div><div style="flex:1">Ctrl+K inline editing</div><div class="ct">01:49</div></div>
+    <div class="cm"><div class="ch">bcabb39</div><div style="flex:1">Project context engine</div><div class="ct">01:48</div></div>
+    <div class="cm"><div class="ch">975a556</div><div style="flex:1">Ollama provider (Rust)</div><div class="ct">01:47</div></div>
+    <div class="cm"><div class="ch">981a48f</div><div style="flex:1">CLIProxy auto-register</div><div class="ct">01:37</div></div>
+    <div class="cm"><div class="ch">9cfed64</div><div style="flex:1">15 tools verified (26 tests)</div><div class="ct">01:33</div></div>
+  </div>
+
+  <div class="card">
+    <h2>New Files Created</h2>
+    <div class="ni"><div class="nn">📄</div>src/context/ProjectIndexer.ts</div>
+    <div class="ni"><div class="nn">📄</div>src/store/context.ts</div>
+    <div class="ni"><div class="nn">📄</div>src/components/editor/InlineEditWidget.tsx</div>
+    <div class="ni"><div class="nn">📄</div>src/hooks/useInlineEdit.ts</div>
+    <div class="ni"><div class="nn">📄</div>src/components/chat/MentionPicker.tsx</div>
+    <div class="ni"><div class="nn">📄</div>src/components/chat/SlashCommands.tsx</div>
+    <div class="ni"><div class="nn">📄</div>src/components/chat/ContextPills.tsx</div>
+    <div class="ni"><div class="nn">📄</div>src/components/chat/CodeBlockActions.tsx</div>
+    <div class="ni"><div class="nn">📄</div>src/components/chat/DiffPreview.tsx</div>
+    <div class="ni"><div class="nn">📄</div>src/components/ui/Toast.tsx</div>
+    <div class="ni"><div class="nn">📄</div>src/editor/GhostTextProvider.ts</div>
+  </div>
+
+</div>
+</div>
+
+<script>
+// Client-side password auth using SHA-256 hash
+// Password hash is checked client-side (good enough for a personal dashboard)
+const HASH = "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"; // sha256("password")
+
+async function sha256(str) {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,"0")).join("");
+}
+
+const pw = document.getElementById("pw");
+const err = document.getElementById("err");
+
+// Check saved session
+if (sessionStorage.getItem("nexus_auth") === "1") show();
+
+pw.addEventListener("keydown", async (e) => {
+  if (e.key !== "Enter") return;
+  const h = await sha256(pw.value);
+  if (h === HASH) {
+    sessionStorage.setItem("nexus_auth", "1");
+    show();
+  } else {
+    err.textContent = "Wrong password";
+    pw.value = "";
+    pw.classList.add("shake");
+    setTimeout(() => pw.classList.remove("shake"), 500);
+  }
+});
+
+function show() {
+  document.getElementById("lock").style.display = "none";
+  document.getElementById("dash").style.display = "block";
+}
+
+function logout() {
+  sessionStorage.removeItem("nexus_auth");
+  document.getElementById("dash").style.display = "none";
+  document.getElementById("lock").style.display = "block";
+  pw.value = "";
+  err.textContent = "";
+}
+
+function tick() {
+  const el = document.getElementById("clock");
+  if (el) el.textContent = new Date().toLocaleString("en-IN", {
+    timeZone:"Asia/Calcutta",hour:"2-digit",minute:"2-digit",second:"2-digit",
+    hour12:false,day:"2-digit",month:"short",year:"numeric"
+  });
+}
+tick(); setInterval(tick, 1000);
+</script>
+</body>
+</html>
