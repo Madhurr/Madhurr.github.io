@@ -345,10 +345,10 @@ async function fetchData(){
       if(tsb)tsb.textContent=(d.build.tsErrors||0)===0?"Clean ✓":d.build.tsErrors+" errors";
       if(tsb)tsb.style.color=(d.build.tsErrors||0)===0?"var(--grn)":"var(--red)";
     }
-    if(d.files){
-      document.getElementById("s-lines").textContent=d.files.linesAdded>999?(d.files.linesAdded/1000).toFixed(1)+"K":String(d.files.linesAdded);
-      document.getElementById("q-added").textContent=d.files.linesAdded.toLocaleString();
-      document.getElementById("q-new").textContent=String(d.files.new||0);
+    if(d.code){
+      document.getElementById("s-lines").textContent=d.code.linesAdded>999?(d.code.linesAdded/1000).toFixed(1)+"K":String(d.code.linesAdded);
+      document.getElementById("q-added").textContent=d.code.linesAdded.toLocaleString();
+      document.getElementById("q-new").textContent=String(d.code.newFiles||0);
     }
 
     // Hardware gauges
@@ -521,7 +521,20 @@ async function fetchAgents(){
       document.getElementById("anton-stats").textContent=`${o.totalAgentsSpawned} agents · ${(o.totalTokensUsed/1000).toFixed(0)}K tokens · ${o.totalCommits} commits`;
     }
 
-    // Pipeline view
+    // Phases
+    if(d.phases){
+      const pv=document.getElementById("pipeline-view");
+      pv.innerHTML=d.phases.map((p,i)=>{
+        const sc=p.status==="done"?"d":p.status==="active"?"a":"q";
+        const icon=sc==="d"?"✓":sc==="a"?"●":"○";
+        const col=sc==="d"?"var(--grn)":sc==="a"?"var(--blu)":"var(--t3)";
+        const pct=p.items?Math.round(p.done/p.items*100):0;
+        const arrow=i<d.phases.length-1?'<div class="wave-arrow">→</div>':"";
+        return `<div class="wave" style="min-width:120px"><div class="wave-hdr"><div class="wi ${sc}">${icon}</div><span style="font-size:10px">${p.name}</span></div><div style="font-size:9px;color:${col};padding:2px 8px">${p.done}/${p.items} (${pct}%)</div></div>${arrow}`;
+      }).join("");
+    }
+
+    // Pipeline view (legacy waves)
     if(d.waves){
       const pv=document.getElementById("pipeline-view");
       pv.innerHTML=d.waves.map((w,i)=>{
