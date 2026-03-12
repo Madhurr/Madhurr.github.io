@@ -1,19 +1,19 @@
 {
-  "updated": "2026-03-12T21:12:04Z",
-  "updatedIST": "21:12:04 12 Mar",
+  "updated": "2026-03-12T21:14:04Z",
+  "updatedIST": "21:14:04 12 Mar",
   "hw": {
-    "cpuPct": 8,
-    "cpuTemp": 44,
-    "ramPct": 11,
-    "ramDetail": "15086MB / 128574MB",
-    "gpuPct": 17,
-    "gpuTemp": "40",
+    "cpuPct": 4,
+    "cpuTemp": 45,
+    "ramPct": 12,
+    "ramDetail": "15547MB / 128574MB",
+    "gpuPct": 4,
+    "gpuTemp": "38",
     "diskPct": 16,
-    "diskDetail": "275G / 1.8T",
+    "diskDetail": "276G / 1.8T",
     "vramUsed": "19.4GB / 20GB"
   },
   "tests": { "vitest": 135, "rust": 26 },
-  "files": { "new": 16, "linesAdded": 5308 },
-  "build": { "ok": 1, "tsErrors": 0, "bundleKB": 607 },
-  "commits": [{"hash":"5b2ca59","msg":"Add centralized keybinding system with 20+ shortcuts","time":"02:25"},{"hash":"c939669","msg":"Wire context engine into AI chat flow","time":"02:25"},{"hash":"5a2f8ce","msg":"Add AI model selection and ghost text settings","time":"02:25"},{"hash":"7030de1","msg":"Add Apply/Copy/Insert buttons on chat code blocks","time":"01:59"},{"hash":"2bc254e","msg":"Add ghost text inline completions via Ollama","time":"01:58"},{"hash":"8fab31d","msg":"Add context engine tests (10 tests for import/export extraction)","time":"01:57"},{"hash":"34cb589","msg":"Wire Ollama auto-detection + project auto-indexing on startup","time":"01:55"},{"hash":"39646e7","msg":"Add @ mentions, slash commands, and context pills to AI chat","time":"01:49"},{"hash":"0995a3b","msg":"Add Ctrl+K inline editing with diff preview","time":"01:49"},{"hash":"bcabb39","msg":"Add project context engine for AI","time":"01:47"},{"hash":"975a556","msg":"Add Ollama as local AI provider","time":"01:47"},{"hash":"981a48f","msg":"Phase 1.1: Auto-register CLIProxyAPI on startup","time":"01:40"}]
+  "files": { "new": 16, "linesAdded": 5343 },
+  "build": { "ok": 1, "tsErrors": 0, "bundleKB": 608 },
+  "commits": [{"hash":"7b958f0","msg":"Fix 3 bugs found by Qwen3 Coder analysis","time":"02:42"},{"hash":"5b2ca59","msg":"Add centralized keybinding system with 20+ shortcuts","time":"02:25"},{"hash":"c939669","msg":"Wire context engine into AI chat flow","time":"02:25"},{"hash":"5a2f8ce","msg":"Add AI model selection and ghost text settings","time":"02:25"},{"hash":"7030de1","msg":"Add Apply/Copy/Insert buttons on chat code blocks","time":"01:59"},{"hash":"2bc254e","msg":"Add ghost text inline completions via Ollama","time":"01:58"},{"hash":"8fab31d","msg":"Add context engine tests (10 tests for import/export extraction)","time":"01:57"},{"hash":"34cb589","msg":"Wire Ollama auto-detection + project auto-indexing on startup","time":"01:55"},{"hash":"39646e7","msg":"Add @ mentions, slash commands, and context pills to AI chat","time":"01:49"},{"hash":"0995a3b","msg":"Add Ctrl+K inline editing with diff preview","time":"01:49"},{"hash":"bcabb39","msg":"Add project context engine for AI","time":"01:47"},{"hash":"975a556","msg":"Add Ollama as local AI provider","time":"01:47"}]
 }
