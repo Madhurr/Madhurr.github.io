@@ -119,9 +119,9 @@ cat > "$DASH/data.json" << JSONEOF
     {"name":"B: LSP Completion","status":"done","items":7,"done":7},
     {"name":"C: File Ops & Nav","status":"done","items":5,"done":5},
     {"name":"D: Git Integration","status":"done","items":4,"done":4},
-    {"name":"E: Preview System","status":"active","items":6,"done":0},
-    {"name":"F: AI Completion","status":"pending","items":4,"done":0},
-    {"name":"G: Multi-Agent","status":"pending","items":6,"done":0},
+    {"name":"E: Preview System","status":"done","items":6,"done":4},
+    {"name":"F: AI Completion","status":"done","items":4,"done":3},
+    {"name":"G: Multi-Agent","status":"active","items":6,"done":0},
     {"name":"H: Polish","status":"pending","items":4,"done":0}
   ],
   "commits": [$(echo "$COMMITS" | paste -sd, -)]
