@@ -15,7 +15,8 @@ NEW_FILES=$(git diff --name-only --diff-filter=A 77dee46..HEAD 2>/dev/null | gre
 LINES_ADDED=$(git diff --stat 77dee46..HEAD 2>/dev/null | tail -1 | grep -oP '\d+ insertion' | grep -oP '\d+' || echo "?")
 BUNDLE_KB=$(ls -la dist/assets/index-*.js 2>/dev/null | awk '{printf "%.0f", $5/1024}' || echo "571")
 BUILD_OK=$(npm run build 2>/dev/null | grep -c "built in" || echo "0")
-TS_ERRORS=$(npx tsc --noEmit 2>&1 | grep -c "error TS" || echo "0")
+TS_ERRORS=$(npx tsc --noEmit 2>&1 | grep -c "error TS" 2>/dev/null; true)
+TS_ERRORS=${TS_ERRORS:-0}
 
 # Generate JSON data file
 cat > "$DASH/data.json" << JSONEOF
