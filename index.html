@@ -159,7 +159,7 @@ body{font-family:Inter,-apple-system,sans-serif;background:#0a0a0f;color:#e0e0ec
 
   <div class="card">
     <h2>Commits (Tonight)</h2>
-    <div class="cm"><div class="ch">8fab31d</div><div style="flex:1">Context engine tests (48 total)</div><div class="ct">01:57</div></div>
+    <div id="commit-list"> class="cm"><div class="ch">8fab31d</div><div style="flex:1">Context engine tests (48 total)</div><div class="ct">01:57</div></div>
     <div class="cm"><div class="ch">34cb589</div><div style="flex:1">Ollama auto-detect + indexing</div><div class="ct">01:53</div></div>
     <div class="cm"><div class="ch">39646e7</div><div style="flex:1">@ mentions, slash commands</div><div class="ct">01:50</div></div>
     <div class="cm"><div class="ch">0995a3b</div><div style="flex:1">Ctrl+K inline editing</div><div class="ct">01:49</div></div>
@@ -167,6 +167,8 @@ body{font-family:Inter,-apple-system,sans-serif;background:#0a0a0f;color:#e0e0ec
     <div class="cm"><div class="ch">975a556</div><div style="flex:1">Ollama provider (Rust)</div><div class="ct">01:47</div></div>
     <div class="cm"><div class="ch">981a48f</div><div style="flex:1">CLIProxy auto-register</div><div class="ct">01:37</div></div>
     <div class="cm"><div class="ch">9cfed64</div><div style="flex:1">15 tools verified (26 tests)</div><div class="ct">01:33</div></div>
+  </div>
+  <div id="last-update" style="font-size:10px;color:#555;margin-top:6px;text-align:right">Awaiting first sync…</div>
   </div>
 
   <div class="card">
@@ -220,6 +222,8 @@ pw.addEventListener("keydown", async (e) => {
 function show() {
   document.getElementById("lock").style.display = "none";
   document.getElementById("dash").style.display = "block";
+  fetchData();
+  setInterval(fetchData, 120000); // refresh every 2 min
 }
 
 function logout() {
@@ -228,6 +232,35 @@ function logout() {
   document.getElementById("lock").style.display = "block";
   pw.value = "";
   err.textContent = "";
+}
+
+async function fetchData() {
+  try {
+    const resp = await fetch("data.json?t=" + Date.now());
+    if (!resp.ok) return;
+    const d = await resp.json();
+
+    // Update stats
+    const statsEls = document.querySelectorAll(".sv");
+    if (d.tests && statsEls[0]) statsEls[0].textContent = String((d.tests.vitest||0) + (d.tests.rust||0));
+    if (d.files && statsEls[3]) statsEls[3].textContent = (d.files.linesAdded > 999 ? (d.files.linesAdded/1000).toFixed(1)+"K" : String(d.files.linesAdded));
+    if (d.build && statsEls[4]) statsEls[4].textContent = String(d.build.bundleKB);
+    if (d.build && statsEls[5]) statsEls[5].textContent = String(d.build.tsErrors);
+
+    // Update commits
+    if (d.commits && d.commits.length) {
+      const commitContainer = document.getElementById("commit-list");
+      if (commitContainer) {
+        commitContainer.innerHTML = d.commits.map(c =>
+          `<div class="cm"><div class="ch">${c.hash}</div><div style="flex:1">${c.msg.length > 42 ? c.msg.slice(0,42)+"…" : c.msg}</div><div class="ct">${c.time}</div></div>`
+        ).join("");
+      }
+    }
+
+    // Update last refresh time
+    const upd = document.getElementById("last-update");
+    if (upd && d.updatedIST) upd.textContent = "Last sync: " + d.updatedIST;
+  } catch(e) { /* silent */ }
 }
 
 function tick() {
