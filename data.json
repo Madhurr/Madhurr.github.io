@@ -1,16 +1,16 @@
 {
-  "updated": "2026-03-12T20:58:04Z",
-  "updatedIST": "20:58:04 12 Mar",
+  "updated": "2026-03-12T21:00:05Z",
+  "updatedIST": "21:00:05 12 Mar",
   "hw": {
-    "cpuPct": 2,
-    "cpuTemp": 41,
+    "cpuPct": 1,
+    "cpuTemp": 38,
     "ramPct": 9,
-    "ramDetail": "12535MB / 128574MB",
-    "gpuPct": 5,
+    "ramDetail": "12152MB / 128574MB",
+    "gpuPct": 3,
     "gpuTemp": "33",
     "diskPct": 16,
     "diskDetail": "275G / 1.8T",
-    "vramUsed": "2.5GB / 20GB"
+    "vramUsed": "2.6GB / 20GB"
   },
   "tests": { "vitest": 135, "rust": 26 },
   "files": { "new": 16, "linesAdded": 5308 },
