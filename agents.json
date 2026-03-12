@@ -1,0 +1,52 @@
+{
+  "updated": "2026-03-12T20:58:01Z",
+  "waves": [
+    {
+      "name": "Wave 1 — Foundation",
+      "status": "done",
+      "agents": [
+        {"name": "nexus-ollama", "task": "Wire Ollama local models as Rust AI provider", "status": "done", "runtime": "1m 43s", "tokens": 25500, "files": ["rust/nexus-core/src/ai/openai_compat.rs", "rust/nexus-tauri/src/commands/ai.rs"], "commit": "975a556"},
+        {"name": "nexus-context-engine", "task": "Build project indexer + smart context selection", "status": "done", "runtime": "1m 28s", "tokens": 12000, "files": ["src/context/ProjectIndexer.ts", "src/store/context.ts"], "commit": "bcabb39"},
+        {"name": "nexus-inline-edit", "task": "Ctrl+K inline editing with diff preview", "status": "done", "runtime": "2m 58s", "tokens": 15000, "files": ["src/components/editor/InlineEditWidget.tsx", "src/hooks/useInlineEdit.ts"], "commit": "0995a3b"},
+        {"name": "nexus-chat-ux", "task": "@ mentions, /slash commands, context pills", "status": "done", "runtime": "2m 52s", "tokens": 18000, "files": ["src/components/chat/MentionPicker.tsx", "src/components/chat/SlashCommands.tsx", "src/components/chat/ContextPills.tsx"], "commit": "39646e7"}
+      ]
+    },
+    {
+      "name": "Wave 2 — Features",
+      "status": "done",
+      "agents": [
+        {"name": "nexus-ghost-text", "task": "Copilot-style inline completions via Ollama FIM", "status": "done", "runtime": "2m 30s", "tokens": 16000, "files": ["src/editor/GhostTextProvider.ts", "rust/nexus-tauri/src/commands/ai.rs"], "commit": "2bc254e"},
+        {"name": "nexus-apply-button", "task": "Apply/Copy/Insert buttons on chat code blocks", "status": "done", "runtime": "3m 12s", "tokens": 18000, "files": ["src/components/chat/CodeBlockActions.tsx", "src/components/chat/DiffPreview.tsx"], "commit": "7030de1"}
+      ]
+    },
+    {
+      "name": "Wave 3 — Integration & Quality",
+      "status": "active",
+      "agents": [
+        {"name": "nexus-chat-context-wire", "task": "Wire context engine into AI chat flow", "status": "done", "runtime": "3m 21s", "tokens": 36300, "files": ["src/store/chat.ts", "src/components/panels/AiChatPanel.tsx"], "commit": "pending"},
+        {"name": "nexus-settings-ai", "task": "AI model picker + ghost text settings panel", "status": "running", "runtime": "running", "tokens": 0, "files": ["src/components/panels/SettingsPanel.tsx", "src/store/ui.ts"], "depends": "none"},
+        {"name": "nexus-more-tests", "task": "Edge case tests for all stores (target 80+)", "status": "running", "runtime": "running", "tokens": 0, "files": ["src/__tests__/store-edge-cases.test.ts"], "depends": "none"},
+        {"name": "nexus-keybindings", "task": "Centralized keybinding system (20+ shortcuts)", "status": "running", "runtime": "running", "tokens": 0, "files": ["src/keybindings/KeybindingManager.ts", "src/components/panels/KeybindingsPanel.tsx"], "depends": "none"}
+      ]
+    },
+    {
+      "name": "Wave 4 — Planned",
+      "status": "queued",
+      "agents": [
+        {"name": "nexus-integration-test", "task": "Full end-to-end integration test with real API", "status": "queued", "depends": "wave3"},
+        {"name": "nexus-conflict-resolve", "task": "Merge all agent outputs, resolve conflicts, fix bugs", "status": "queued", "depends": "wave3"},
+        {"name": "nexus-polish", "task": "UI polish pass: animations, transitions, error states", "status": "queued", "depends": "nexus-conflict-resolve"}
+      ]
+    }
+  ],
+  "orchestrator": {
+    "name": "Anton (Main)",
+    "role": "Architect & Integrator",
+    "doing": "Reviewing wave 3 outputs, validating code quality, planning wave 4",
+    "totalAgentsSpawned": 10,
+    "totalTokensUsed": 240000,
+    "totalCommits": 12,
+    "totalFilesCreated": 13,
+    "totalLinesAdded": 3463
+  }
+}
