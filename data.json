@@ -1,21 +1,21 @@
 {
-  "updated": "2026-03-12T22:20:26Z",
-  "updatedIST": "03:50:26 13 Mar",
+  "updated": "2026-03-12T22:22:10Z",
+  "updatedIST": "03:52:10 13 Mar",
   "hw": {
-    "cpuPct": 3, "cpuTemp": 43,
-    "ramPct": 10, "ramUsedMB": 14105, "ramTotalMB": 128574,
-    "gpuPct": 7, "gpuTemp": 35,
+    "cpuPct": 1, "cpuTemp": 43,
+    "ramPct": 10, "ramUsedMB": 13555, "ramTotalMB": 128574,
+    "gpuPct": 6, "gpuTemp": 35,
     "diskPct": 18, "diskUsed": "310G", "diskTotal": "1.8T",
     "vramUsedGB": 2.3, "vramTotalGB": 20
   },
   "tests": { "vitest": 135, "vitestFail": 0, "vitestFiles": 3, "rust": 26 },
-  "build": { "tsErrors": 0, "bundleKB": 620, "buildTime": "2.51" },
+  "build": { "tsErrors": 0, "bundleKB": 620, "buildTime": "2.52" },
   "code": {
-    "tsLines": 20603, "rsLines": 77815,
+    "tsLines": 20691, "rsLines": 77815,
     "newFiles": 171, "linesAdded": 42765, "linesRemoved": 287,
     "totalCommits": 20
   },
-  "architecture": {"Other": {"count": 6, "lines": 1691, "files": [{"name": "themes.ts", "lines": 722}, {"name": "packs.ts", "lines": 662}]}, "Stores": {"count": 13, "lines": 2224, "files": [{"name": "chat.ts", "lines": 425}, {"name": "agents.ts", "lines": 402}, {"name": "activity.ts", "lines": 254}, {"name": "ui.ts", "lines": 247}]}, "Hooks": {"count": 3, "lines": 216, "files": []}, "Core Systems": {"count": 4, "lines": 1994, "files": [{"name": "LspClientManager.ts", "lines": 1233}, {"name": "ProjectIndexer.ts", "lines": 311}, {"name": "KeybindingManager.ts", "lines": 302}]}, "Components": {"count": 9, "lines": 1905, "files": [{"name": "MainLayout.tsx", "lines": 435}, {"name": "PipelineRunner.tsx", "lines": 303}, {"name": "PipelineBuilder.tsx", "lines": 258}, {"name": "AiTerminalAssistant.tsx", "lines": 249}]}, "Chat UI": {"count": 5, "lines": 755, "files": []}, "Panels": {"count": 19, "lines": 8641, "files": [{"name": "EditorPanel.tsx", "lines": 962}, {"name": "AiChatPanel.tsx", "lines": 953}, {"name": "SettingsPanel.tsx", "lines": 908}, {"name": "GitPanel.tsx", "lines": 894}, {"name": "AgentPanel.tsx", "lines": 682}]}, "Shell": {"count": 5, "lines": 986, "files": [{"name": "CommandPalette.tsx", "lines": 294}, {"name": "StatusBar.tsx", "lines": 271}]}, "Editor": {"count": 2, "lines": 672, "files": [{"name": "InlineEditWidget.tsx", "lines": 522}]}},
+  "architecture": {"Other": {"count": 6, "lines": 1691, "files": [{"name": "themes.ts", "lines": 722}, {"name": "packs.ts", "lines": 662}]}, "Stores": {"count": 13, "lines": 2224, "files": [{"name": "chat.ts", "lines": 425}, {"name": "agents.ts", "lines": 402}, {"name": "activity.ts", "lines": 254}, {"name": "ui.ts", "lines": 247}]}, "Hooks": {"count": 3, "lines": 216, "files": []}, "Core Systems": {"count": 5, "lines": 2082, "files": [{"name": "LspClientManager.ts", "lines": 1233}, {"name": "ProjectIndexer.ts", "lines": 311}, {"name": "KeybindingManager.ts", "lines": 302}]}, "Components": {"count": 9, "lines": 1905, "files": [{"name": "MainLayout.tsx", "lines": 435}, {"name": "PipelineRunner.tsx", "lines": 303}, {"name": "PipelineBuilder.tsx", "lines": 258}, {"name": "AiTerminalAssistant.tsx", "lines": 249}]}, "Chat UI": {"count": 5, "lines": 755, "files": []}, "Panels": {"count": 19, "lines": 8641, "files": [{"name": "EditorPanel.tsx", "lines": 962}, {"name": "AiChatPanel.tsx", "lines": 953}, {"name": "SettingsPanel.tsx", "lines": 908}, {"name": "GitPanel.tsx", "lines": 894}, {"name": "AgentPanel.tsx", "lines": 682}]}, "Shell": {"count": 5, "lines": 986, "files": [{"name": "CommandPalette.tsx", "lines": 294}, {"name": "StatusBar.tsx", "lines": 271}]}, "Editor": {"count": 2, "lines": 672, "files": [{"name": "InlineEditWidget.tsx", "lines": 522}]}},
   "changedFiles": [{"add":353,"del":0,"file":"dashboard.html"},{"add":669,"del":0,"file":"docs/COMPLETE_ROADMAP.md"},{"add":118,"del":0,"file":"docs/LIVE_PREVIEW_RESEARCH.md"},{"add":322,"del":0,"file":"docs/PHASED_PLAN.md"},{"add":23,"del":0,"file":"resources/agent-templates/01-core-development/.claude-plugin/plugin.json"},{"add":139,"del":0,"file":"resources/agent-templates/01-core-development/README.md"},{"add":237,"del":0,"file":"resources/agent-templates/01-core-development/api-designer.md"},{"add":222,"del":0,"file":"resources/agent-templates/01-core-development/backend-developer.md"},{"add":240,"del":0,"file":"resources/agent-templates/01-core-development/electron-pro.md"},{"add":133,"del":0,"file":"resources/agent-templates/01-core-development/frontend-developer.md"},{"add":235,"del":0,"file":"resources/agent-templates/01-core-development/fullstack-developer.md"},{"add":238,"del":0,"file":"resources/agent-templates/01-core-development/graphql-architect.md"},{"add":239,"del":0,"file":"resources/agent-templates/01-core-development/microservices-architect.md"},{"add":283,"del":0,"file":"resources/agent-templates/01-core-development/mobile-developer.md"},{"add":174,"del":0,"file":"resources/agent-templates/01-core-development/ui-designer.md"},{"add":150,"del":0,"file":"resources/agent-templates/01-core-development/websocket-engineer.md"},{"add":39,"del":0,"file":"resources/agent-templates/02-language-specialists/.claude-plugin/plugin.json"},{"add":219,"del":0,"file":"resources/agent-templates/02-language-specialists/README.md"},{"add":287,"del":0,"file":"resources/agent-templates/02-language-specialists/angular-architect.md"},{"add":277,"del":0,"file":"resources/agent-templates/02-language-specialists/cpp-pro.md"}],
   "feedback": [
   {"bug":"LSP unavailableServers never expires","severity":"high","status":"fixed","commit":"7b958f0"},
