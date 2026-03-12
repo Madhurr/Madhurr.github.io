@@ -15,7 +15,7 @@ NPROC=$(nproc)
 CPU_PCT=$(awk "BEGIN{printf \"%.0f\", ($LOAD/$NPROC)*100}")
 [ "$CPU_PCT" -gt 100 ] 2>/dev/null && CPU_PCT=100
 
-CPU_TEMP=$(cat /sys/class/hwmon/hwmon*/temp1_input 2>/dev/null | head -1 | awk '{printf "%.0f", $1/1000}' || echo "0")
+CPU_TEMP=$(cat /sys/class/hwmon/hwmon7/temp1_input 2>/dev/null | awk '{printf "%.0f", $1/1000}' || echo "0")
 
 RAM_TOTAL=$(free -m | awk '/Mem:/{print $2}')
 RAM_USED=$(free -m | awk '/Mem:/{print $3}')
@@ -23,7 +23,7 @@ RAM_PCT=$((RAM_USED * 100 / RAM_TOTAL))
 RAM_DETAIL="${RAM_USED}MB / ${RAM_TOTAL}MB"
 
 GPU_PCT=$(cat /sys/class/drm/card*/device/gpu_busy_percent 2>/dev/null | head -1 || echo "0")
-GPU_TEMP=$(rocm-smi --showtemp 2>/dev/null | grep "edge" | grep -oP '\d+\.\d+' | head -1 || cat /sys/class/hwmon/hwmon*/temp1_input 2>/dev/null | tail -1 | awk '{printf "%.0f",$1/1000}' || echo "0")
+GPU_TEMP=$(cat /sys/class/hwmon/hwmon4/temp1_input 2>/dev/null | awk '{printf "%.0f", $1/1000}' || echo "0")
 
 DISK_PCT=$(df / 2>/dev/null | awk 'NR==2{gsub(/%/,"",$5); print $5}' || echo "0")
 DISK_USED=$(df -h / 2>/dev/null | awk 'NR==2{print $3}' || echo "?")
