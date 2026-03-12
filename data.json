@@ -1,13 +1,13 @@
 {
-  "updated": "2026-03-12T21:00:05Z",
-  "updatedIST": "21:00:05 12 Mar",
+  "updated": "2026-03-12T21:02:04Z",
+  "updatedIST": "21:02:04 12 Mar",
   "hw": {
     "cpuPct": 1,
-    "cpuTemp": 38,
+    "cpuTemp": 46,
     "ramPct": 9,
-    "ramDetail": "12152MB / 128574MB",
+    "ramDetail": "12215MB / 128574MB",
     "gpuPct": 3,
-    "gpuTemp": "33",
+    "gpuTemp": "34",
     "diskPct": 16,
     "diskDetail": "275G / 1.8T",
     "vramUsed": "2.6GB / 20GB"
