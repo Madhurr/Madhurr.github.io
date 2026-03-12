@@ -1,19 +1,29 @@
 {
-  "updated": "2026-03-12T21:14:04Z",
-  "updatedIST": "21:14:04 12 Mar",
+  "updated": "2026-03-12T21:15:15Z",
+  "updatedIST": "21:15:15 12 Mar",
   "hw": {
-    "cpuPct": 4,
-    "cpuTemp": 45,
-    "ramPct": 12,
-    "ramDetail": "15547MB / 128574MB",
-    "gpuPct": 4,
-    "gpuTemp": "38",
-    "diskPct": 16,
-    "diskDetail": "276G / 1.8T",
-    "vramUsed": "19.4GB / 20GB"
+    "cpuPct": 2, "cpuTemp": 44,
+    "ramPct": 11, "ramUsedMB": 15347, "ramTotalMB": 128574,
+    "gpuPct": 4, "gpuTemp": 37,
+    "diskPct": 16, "diskUsed": "277G", "diskTotal": "1.8T",
+    "vramUsedGB": 19.2, "vramTotalGB": 20
   },
-  "tests": { "vitest": 135, "rust": 26 },
-  "files": { "new": 16, "linesAdded": 5343 },
-  "build": { "ok": 1, "tsErrors": 0, "bundleKB": 608 },
-  "commits": [{"hash":"7b958f0","msg":"Fix 3 bugs found by Qwen3 Coder analysis","time":"02:42"},{"hash":"5b2ca59","msg":"Add centralized keybinding system with 20+ shortcuts","time":"02:25"},{"hash":"c939669","msg":"Wire context engine into AI chat flow","time":"02:25"},{"hash":"5a2f8ce","msg":"Add AI model selection and ghost text settings","time":"02:25"},{"hash":"7030de1","msg":"Add Apply/Copy/Insert buttons on chat code blocks","time":"01:59"},{"hash":"2bc254e","msg":"Add ghost text inline completions via Ollama","time":"01:58"},{"hash":"8fab31d","msg":"Add context engine tests (10 tests for import/export extraction)","time":"01:57"},{"hash":"34cb589","msg":"Wire Ollama auto-detection + project auto-indexing on startup","time":"01:55"},{"hash":"39646e7","msg":"Add @ mentions, slash commands, and context pills to AI chat","time":"01:49"},{"hash":"0995a3b","msg":"Add Ctrl+K inline editing with diff preview","time":"01:49"},{"hash":"bcabb39","msg":"Add project context engine for AI","time":"01:47"},{"hash":"975a556","msg":"Add Ollama as local AI provider","time":"01:47"}]
+  "tests": { "vitest": 3
+135, "vitestFail": 0, "vitestFiles": 3, "rust": 26 },
+  "build": { "tsErrors": 0, "bundleKB": 608, "buildTime": "2.56" },
+  "code": {
+    "tsLines": 19853, "rsLines": 77815,
+    "newFiles": 16, "linesAdded": 5343, "linesRemoved": 214,
+    "totalCommits": 15
+  },
+  "architecture": {"Other": {"count": 6, "lines": 1691, "files": [{"name": "themes.ts", "lines": 722}, {"name": "packs.ts", "lines": 662}]}, "Stores": {"count": 13, "lines": 2186, "files": [{"name": "chat.ts", "lines": 425}, {"name": "agents.ts", "lines": 402}, {"name": "activity.ts", "lines": 254}, {"name": "ui.ts", "lines": 243}]}, "Hooks": {"count": 2, "lines": 158, "files": []}, "Core Systems": {"count": 4, "lines": 1594, "files": [{"name": "LspClientManager.ts", "lines": 833}, {"name": "ProjectIndexer.ts", "lines": 311}, {"name": "KeybindingManager.ts", "lines": 302}]}, "Components": {"count": 9, "lines": 1903, "files": [{"name": "MainLayout.tsx", "lines": 433}, {"name": "PipelineRunner.tsx", "lines": 303}, {"name": "PipelineBuilder.tsx", "lines": 258}, {"name": "AiTerminalAssistant.tsx", "lines": 249}]}, "Chat UI": {"count": 5, "lines": 755, "files": []}, "Panels": {"count": 18, "lines": 8404, "files": [{"name": "EditorPanel.tsx", "lines": 990}, {"name": "AiChatPanel.tsx", "lines": 953}, {"name": "GitPanel.tsx", "lines": 894}, {"name": "SettingsPanel.tsx", "lines": 892}, {"name": "AgentPanel.tsx", "lines": 682}]}, "Shell": {"count": 5, "lines": 971, "files": [{"name": "CommandPalette.tsx", "lines": 294}, {"name": "StatusBar.tsx", "lines": 256}]}, "Editor": {"count": 2, "lines": 672, "files": [{"name": "InlineEditWidget.tsx", "lines": 522}]}},
+  "changedFiles": [{"add":353,"del":0,"file":"dashboard.html"},{"add":322,"del":0,"file":"docs/PHASED_PLAN.md"},{"add":1,"del":1,"file":"rust/nexus-core/src/ai/gateway.rs"},{"add":85,"del":10,"file":"rust/nexus-core/src/ai/openai_compat.rs"},{"add":266,"del":42,"file":"rust/nexus-core/src/ai/tools.rs"},{"add":121,"del":0,"file":"rust/nexus-tauri/src/commands/ai.rs"},{"add":3,"del":0,"file":"rust/nexus-tauri/src/lib.rs"},{"add":80,"del":15,"file":"src/App.tsx"},{"add":109,"del":0,"file":"src/__tests__/context-engine.test.ts"},{"add":896,"del":0,"file":"src/__tests__/store-edge-cases.test.ts"},{"add":149,"del":0,"file":"src/components/chat/CodeBlockActions.tsx"},{"add":93,"del":0,"file":"src/components/chat/ContextPills.tsx"},{"add":200,"del":0,"file":"src/components/chat/DiffPreview.tsx"},{"add":151,"del":0,"file":"src/components/chat/MentionPicker.tsx"},{"add":162,"del":0,"file":"src/components/chat/SlashCommands.tsx"},{"add":522,"del":0,"file":"src/components/editor/InlineEditWidget.tsx"},{"add":238,"del":107,"file":"src/components/panels/AiChatPanel.tsx"},{"add":12,"del":0,"file":"src/components/panels/EditorPanel.tsx"},{"add":179,"del":0,"file":"src/components/panels/KeybindingsPanel.tsx"},{"add":220,"del":35,"file":"src/components/panels/SettingsPanel.tsx"}],
+  "feedback": [
+  {"bug":"LSP unavailableServers never expires","severity":"high","status":"fixed","commit":"7b958f0"},
+  {"bug":"Ghost text cache shared across panes","severity":"medium","status":"fixed","commit":"7b958f0"},
+  {"bug":"InlineEditWidget floats on scroll","severity":"medium","status":"fixed","commit":"7b958f0"},
+  {"bug":"Context indexer blocks UI on large repos","severity":"low","status":"open","fix":"Use chunked async walk with requestAnimationFrame yields"},
+  {"bug":"File watcher floods on git checkout","severity":"low","status":"open","fix":"Coalesce events with 500ms window before emitting"}
+],
+  "commits": [{"hash":"7b958f0","msg":"Fix 3 bugs found by Qwen3 Coder analysis","time":"02:42","author":"madhur jain"},{"hash":"5b2ca59","msg":"Add centralized keybinding system with 20+ shortcuts","time":"02:25","author":"madhur jain"},{"hash":"c939669","msg":"Wire context engine into AI chat flow","time":"02:25","author":"madhur jain"},{"hash":"5a2f8ce","msg":"Add AI model selection and ghost text settings","time":"02:25","author":"madhur jain"},{"hash":"7030de1","msg":"Add Apply/Copy/Insert buttons on chat code blocks","time":"01:59","author":"madhur jain"},{"hash":"2bc254e","msg":"Add ghost text inline completions via Ollama","time":"01:58","author":"madhur jain"},{"hash":"8fab31d","msg":"Add context engine tests (10 tests for import/export extraction)","time":"01:57","author":"madhur jain"},{"hash":"34cb589","msg":"Wire Ollama auto-detection + project auto-indexing on startup","time":"01:55","author":"madhur jain"},{"hash":"39646e7","msg":"Add @ mentions, slash commands, and context pills to AI chat","time":"01:49","author":"madhur jain"},{"hash":"0995a3b","msg":"Add Ctrl+K inline editing with diff preview","time":"01:49","author":"madhur jain"},{"hash":"bcabb39","msg":"Add project context engine for AI","time":"01:47","author":"madhur jain"},{"hash":"975a556","msg":"Add Ollama as local AI provider","time":"01:47","author":"madhur jain"},{"hash":"981a48f","msg":"Phase 1.1: Auto-register CLIProxyAPI on startup","time":"01:40","author":"madhur jain"},{"hash":"9cfed64","msg":"Phase 1.2: All 15 AI tools verified with 26 Rust tests","time":"01:31","author":"madhur jain"},{"hash":"9b5d558","msg":"Fix Rust compilation (input_schema field name) + add phased development plan","time":"01:25","author":"madhur jain"}]
 }

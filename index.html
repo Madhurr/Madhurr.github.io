@@ -113,6 +113,34 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .acard .ff{font-size:9px;color:var(--t3);padding:1px 0;font-family:'JetBrains Mono',monospace}
 .acard .dep{font-size:9px;color:var(--ylw);margin-top:4px}
 .acard .mt{display:flex;gap:8px;font-size:9px;color:var(--t3);margin-top:4px}
+
+/* Architecture bars */
+.arch-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid rgba(30,30,46,.3)}
+.arch-row:last-child{border:none}
+.arch-name{font-size:11px;width:90px;flex-shrink:0}
+.arch-bar{flex:1;height:16px;background:var(--bg3);border-radius:3px;overflow:hidden;position:relative}
+.arch-fill{height:100%;border-radius:3px;transition:width .5s}
+.arch-label{position:absolute;right:4px;top:1px;font-size:9px;color:var(--t1)}
+.arch-count{font-size:9px;color:var(--t3);width:50px;text-align:right}
+.arch-files{font-size:9px;color:var(--t3);padding:2px 0 2px 98px}
+
+/* Changed file row */
+.cf{display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid rgba(30,30,46,.3);font-size:10px}
+.cf:last-child{border:none}
+.cf-name{flex:1;font-family:'JetBrains Mono',monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cf-add{color:var(--grn);font-size:9px;width:40px;text-align:right}
+.cf-del{color:var(--red);font-size:9px;width:40px;text-align:right}
+.cf-bar{width:60px;height:6px;display:flex;border-radius:2px;overflow:hidden;flex-shrink:0}
+.cf-bar .a{background:var(--grn)}.cf-bar .d{background:var(--red)}
+
+/* Feedback */
+.fb{display:flex;gap:8px;padding:6px 0;border-bottom:1px solid rgba(30,30,46,.3);font-size:11px}
+.fb:last-child{border:none}
+.fb-sev{width:6px;height:6px;border-radius:50%;margin-top:5px;flex-shrink:0}
+.fb-sev.h{background:var(--red)}.fb-sev.m{background:var(--ylw)}.fb-sev.l{background:var(--t3)}
+.fb-st{font-size:8px;padding:1px 6px;border-radius:3px;flex-shrink:0}
+.fb-st.fixed{background:rgba(74,222,128,.08);color:var(--grn)}
+.fb-st.open{background:rgba(251,191,36,.08);color:var(--ylw)}
 </style>
 </head>
 <body>
@@ -246,25 +274,25 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
   <!-- Commits -->
   <div class="c c2">
     <h2>📝 Commit Log</h2>
-    <div id="commit-list">
-      <div class="cm"><div class="ch">loading...</div><div style="flex:1;color:var(--t3)">Fetching from data.json</div></div>
-    </div>
+    <div id="commit-list"></div>
   </div>
 
-  <!-- New Files -->
-  <div class="c">
-    <h2>📁 New Files Created</h2>
-    <div class="fl"><span class="ic">◆</span>context/ProjectIndexer.ts</div>
-    <div class="fl"><span class="ic">◆</span>store/context.ts</div>
-    <div class="fl"><span class="ic">◆</span>editor/InlineEditWidget.tsx</div>
-    <div class="fl"><span class="ic">◆</span>hooks/useInlineEdit.ts</div>
-    <div class="fl"><span class="ic">◆</span>chat/MentionPicker.tsx</div>
-    <div class="fl"><span class="ic">◆</span>chat/SlashCommands.tsx</div>
-    <div class="fl"><span class="ic">◆</span>chat/ContextPills.tsx</div>
-    <div class="fl"><span class="ic">◆</span>chat/CodeBlockActions.tsx</div>
-    <div class="fl"><span class="ic">◆</span>chat/DiffPreview.tsx</div>
-    <div class="fl"><span class="ic">◆</span>ui/Toast.tsx</div>
-    <div class="fl"><span class="ic">◆</span>editor/GhostTextProvider.ts</div>
+  <!-- Architecture -->
+  <div class="c c2">
+    <h2>🏗 Architecture — Module Breakdown</h2>
+    <div id="arch-view"></div>
+  </div>
+
+  <!-- Changed Files Heatmap -->
+  <div class="c c2">
+    <h2>🔥 Files Changed Tonight</h2>
+    <div id="changed-files" style="max-height:260px;overflow-y:auto"></div>
+  </div>
+
+  <!-- Code Review Feedback -->
+  <div class="c c2">
+    <h2>🐛 Bug Review (Qwen3 Coder Analysis)</h2>
+    <div id="feedback-list"></div>
   </div>
 
 </div>
@@ -333,6 +361,59 @@ async function fetchData(){
 
     // Sync indicator
     if(d.updatedIST)document.getElementById("sync").textContent="Synced "+d.updatedIST;
+
+    // Architecture
+    if(d.architecture){
+      const colors={Panels:"var(--blu)",Stores:"var(--pur)","Core Systems":"var(--cyn)","Chat UI":"var(--pnk)",Editor:"var(--grn)",Shell:"var(--org)",Components:"var(--ylw)",Hooks:"var(--t2)",Other:"var(--t3)"};
+      const maxLines=Math.max(...Object.values(d.architecture).map(v=>v.lines));
+      document.getElementById("arch-view").innerHTML=Object.entries(d.architecture)
+        .sort((a,b)=>b[1].lines-a[1].lines)
+        .map(([name,v])=>{
+          const pct=Math.round(v.lines/maxLines*100);
+          const col=colors[name]||"var(--t3)";
+          const files=v.files&&v.files.length?`<div class="arch-files">${v.files.map(f=>`${f.name} (${f.lines})`).join(" · ")}</div>`:"";
+          return `<div class="arch-row"><div class="arch-name">${name}</div><div class="arch-bar"><div class="arch-fill" style="width:${pct}%;background:${col}"></div><div class="arch-label">${v.lines}</div></div><div class="arch-count">${v.count} files</div></div>${files}`;
+        }).join("");
+    }
+
+    // Changed files
+    if(d.changedFiles){
+      const maxChange=Math.max(...d.changedFiles.map(f=>(parseInt(f.add)||0)+(parseInt(f.del)||0)),1);
+      document.getElementById("changed-files").innerHTML=d.changedFiles.map(f=>{
+        const add=parseInt(f.add)||0,del=parseInt(f.del)||0,total=add+del;
+        const aPct=total?Math.round(add/total*100):50;
+        const barW=Math.round(total/maxChange*100);
+        const name=f.file.replace(/^src\//,"");
+        return `<div class="cf"><div class="cf-name">${name}</div><div class="cf-add">+${add}</div><div class="cf-del">-${del}</div><div class="cf-bar" style="width:${Math.max(barW,10)}px"><div class="a" style="width:${aPct}%"></div><div class="d" style="width:${100-aPct}%"></div></div></div>`;
+      }).join("");
+    }
+
+    // Feedback
+    if(d.feedback){
+      document.getElementById("feedback-list").innerHTML=d.feedback.map(f=>{
+        const sc=f.severity==="high"?"h":f.severity==="medium"?"m":"l";
+        const stc=f.status==="fixed"?"fixed":"open";
+        const extra=f.commit?` <span style="color:var(--cyn);font-size:9px">${f.commit}</span>`:"";
+        const fix=f.fix?`<div style="font-size:9px;color:var(--t3);margin-top:2px">💡 ${f.fix}</div>`:"";
+        return `<div class="fb"><div class="fb-sev ${sc}"></div><div style="flex:1">${f.bug}${extra}${fix}</div><div class="fb-st ${stc}">${f.status}</div></div>`;
+      }).join("");
+    }
+
+    // Extra stats
+    if(d.code){
+      const qc=document.getElementById("q-commits");if(qc)qc.textContent=String(d.code.totalCommits);
+      const qr=document.getElementById("q-removed");if(qr)qr.textContent=d.code.linesRemoved.toLocaleString();
+      const qt=document.getElementById("q-ts");if(qt)qt.textContent=d.code.tsLines.toLocaleString();
+      const qrs=document.getElementById("q-rs");if(qrs)qrs.textContent=d.code.rsLines.toLocaleString();
+    }
+    if(d.hw){
+      document.getElementById("ram-detail").textContent=Math.round(d.hw.ramUsedMB/1024)+"GB / "+Math.round(d.hw.ramTotalMB/1024)+"GB";
+      document.getElementById("disk-detail").textContent=d.hw.diskUsed+" / "+d.hw.diskTotal;
+      document.getElementById("vram-info").textContent="VRAM: "+d.hw.vramUsedGB+"GB / "+d.hw.vramTotalGB+"GB";
+    }
+    if(d.build){
+      const vb=document.getElementById("vite-build");if(vb)vb.textContent=d.build.buildTime+"s ✓";
+    }
   }catch(e){}
 }
 
