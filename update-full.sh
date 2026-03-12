@@ -27,9 +27,9 @@ VRAM_T_GB=$(awk "BEGIN{printf \"%.0f\",$VRAM_TOTAL/1073741824}")
 
 # ── Tests ──
 VITEST=$(npx vitest run 2>&1)
-VT_PASS=$(echo "$VITEST" | grep -oP '\d+ passed' | grep -oP '\d+' || echo "0")
-VT_FAIL=$(echo "$VITEST" | grep -oP '\d+ failed' | grep -oP '\d+' || echo "0")
-VT_FILES=$(echo "$VITEST" | grep "Test Files" | grep -oP '\d+ passed' | grep -oP '\d+' || echo "0")
+VT_PASS=$(echo "$VITEST" | grep "Tests" | grep -oP '\d+ passed' | grep -oP '\d+' | head -1 || echo "0")
+VT_FAIL=$(echo "$VITEST" | grep "Tests" | grep -oP '\d+ failed' | grep -oP '\d+' | head -1 || echo "0")
+VT_FILES=$(echo "$VITEST" | grep "Test Files" | grep -oP '\d+ passed' | grep -oP '\d+' | head -1 || echo "0")
 RT_PASS=$(cd rust && cargo test -p nexus-core --lib ai::tools 2>&1 | grep -oP '(\d+) passed' | grep -oP '\d+' || echo "0")
 
 # ── Build ──
