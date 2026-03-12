@@ -117,9 +117,9 @@ cat > "$DASH/data.json" << JSONEOF
   "phases": [
     {"name":"A: Editor Polish","status":"done","items":5,"done":5},
     {"name":"B: LSP Completion","status":"done","items":7,"done":7},
-    {"name":"C: File Ops & Nav","status":"active","items":5,"done":0},
-    {"name":"D: Git Integration","status":"pending","items":4,"done":0},
-    {"name":"E: Preview System","status":"pending","items":6,"done":0},
+    {"name":"C: File Ops & Nav","status":"done","items":5,"done":5},
+    {"name":"D: Git Integration","status":"done","items":4,"done":4},
+    {"name":"E: Preview System","status":"active","items":6,"done":0},
     {"name":"F: AI Completion","status":"pending","items":4,"done":0},
     {"name":"G: Multi-Agent","status":"pending","items":6,"done":0},
     {"name":"H: Polish","status":"pending","items":4,"done":0}
