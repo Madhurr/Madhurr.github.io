@@ -1,8 +1,9 @@
 {
-  "updated": "2026-03-12T20:38:43Z",
-  "updatedIST": "20:38:43 12 Mar",
-  "tests": { "vitest": 48, "rust": 26 },
+  "updated": "2026-03-12T20:40:01Z",
+  "updatedIST": "20:40:01 12 Mar",
+  "tests": { "vitest": ?, "rust": 26 },
   "files": { "new": 13, "linesAdded": 3463 },
-  "build": { "ok": 1, "tsErrors": 0, "bundleKB": 593 },
+  "build": { "ok": 0
+0, "tsErrors": 0, "bundleKB": 593 },
   "commits": [{"hash":"7030de1","msg":"Add Apply/Copy/Insert buttons on chat code blocks","time":"01:59"},{"hash":"2bc254e","msg":"Add ghost text inline completions via Ollama","time":"01:58"},{"hash":"8fab31d","msg":"Add context engine tests (10 tests for import/export extraction)","time":"01:57"},{"hash":"34cb589","msg":"Wire Ollama auto-detection + project auto-indexing on startup","time":"01:55"},{"hash":"39646e7","msg":"Add @ mentions, slash commands, and context pills to AI chat","time":"01:49"},{"hash":"0995a3b","msg":"Add Ctrl+K inline editing with diff preview","time":"01:49"},{"hash":"bcabb39","msg":"Add project context engine for AI","time":"01:47"},{"hash":"975a556","msg":"Add Ollama as local AI provider","time":"01:47"},{"hash":"981a48f","msg":"Phase 1.1: Auto-register CLIProxyAPI on startup","time":"01:40"},{"hash":"9cfed64","msg":"Phase 1.2: All 15 AI tools verified with 26 Rust tests","time":"01:31"},{"hash":"9b5d558","msg":"Fix Rust compilation (input_schema field name) + add phased development plan","time":"01:25"},{"hash":"77dee46","msg":"Add expanded tool system + agent activity observability","time":"01:20"}]
 }
